@@ -1,0 +1,24 @@
+diff --git a/scripts/ssr-glinject b/scripts/ssr-glinject
+index 48be48d..8f8516f 100755
+--- a/scripts/ssr-glinject
++++ b/scripts/ssr-glinject
+@@ -61,4 +61,5 @@ done
+ 
+ echo "ssr-glinject: LD_PRELOAD = $LD_PRELOAD:libssr-glinject.so"
+ echo "ssr-glinject: command = $@"
+-LD_PRELOAD="$LD_PRELOAD:libssr-glinject.so" "$@"
++LD_LIBRARY_PATH="$LD_LIBRARY_PATH;/usr/lib/simplescreenrecorder;/usr/lib64/simplescreenrecorder" LD_PRELOAD="libssr-glinject.so $LD_PRELOAD" "$@"
++
+diff --git a/src/AV/Input/GLInjectInput.cpp b/src/AV/Input/GLInjectInput.cpp
+index d6b53c8..8f4a12d 100644
+--- a/src/AV/Input/GLInjectInput.cpp
++++ b/src/AV/Input/GLInjectInput.cpp
+@@ -96,7 +96,7 @@ void GLInjectInput::SetCapturing(bool capturing) {
+ bool GLInjectInput::LaunchApplication(const QString& channel, bool relax_permissions, const QString& command, const QString& working_directory) {
+ 
+ 	// prepare command
+-	QString full_command = "LD_PRELOAD=\"libssr-glinject.so\" ";
++	QString full_command = "LD_LIBRARY_PATH=\"$LD_LIBRARY_PATH;/usr/lib/simplescreenrecorder;/usr/lib64/simplescreenrecorder\" LD_PRELOAD=\"libssr-glinject.so\" ";
+ 	full_command += "SSR_CHANNEL=\"" + ShellEscape(channel) + "\" ";
+ 	if(relax_permissions)
+ 		full_command += "SSR_STREAM_RELAX_PERMISSIONS=1 ";
