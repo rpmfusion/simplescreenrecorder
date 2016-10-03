@@ -36,7 +36,11 @@ It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 %build
 export LDFLAGS="$LDFLAGS `pkg-config --libs-only-L libavformat libavcodec libavutil libswscale`"
 export CPPFLAGS="$CPPFLAGS `pkg-config --cflags-only-I libavformat libavcodec libavutil libswscale`"
-%configure
+%ifarch %{arm}
+    %configure --disable-glinjectlib
+%else
+    %configure
+%endif
 %make_build
 
 
