@@ -36,11 +36,12 @@ It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 %build
 export LDFLAGS="$LDFLAGS `pkg-config --libs-only-L libavformat libavcodec libavutil libswscale`"
 export CPPFLAGS="$CPPFLAGS `pkg-config --cflags-only-I libavformat libavcodec libavutil libswscale`"
-%ifarch %{arm}
-    %configure --disable-static --disable-x86-asm --disable-glinjectlib
-%else
-    %configure --disable-static
+%configure --disable-static \
+%ifarch %{arm} aarch64
+    --disable-x86-asm \
+    --disable-glinjectlib \
 %endif
+%nil
 %make_build
 
 
@@ -49,8 +50,7 @@ export CPPFLAGS="$CPPFLAGS `pkg-config --cflags-only-I libavformat libavcodec li
 
 rm -f %{buildroot}%{_libdir}/*.la
 mkdir -p %{buildroot}%{_libdir}/%{name}
-%ifarch %{arm}
-%else
+%ifnarch %{arm} aarch64
     mv %{buildroot}%{_libdir}/lib%{shortname}-glinject.so %{buildroot}%{_libdir}/%{name}/lib%{shortname}-glinject.so
 %endif
 
