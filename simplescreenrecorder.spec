@@ -26,7 +26,7 @@ Requires:       hicolor-icon-theme
 Obsoletes:      %{name}-libs
 
 %description
-SimpleScreenRecorder is a screen recorder for Linux.
+It is a screen recorder for Linux.
 Despite the name, this program is actually quite complex.
 It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 
