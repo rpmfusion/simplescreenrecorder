@@ -1,7 +1,7 @@
 %define shortname ssr
 Name:           simplescreenrecorder
 Version:        0.3.6
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        SimpleScreenRecorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -12,14 +12,15 @@ Patch1:         simplescreenrecorder-0.3.6-fix-build.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  ffmpeg-devel
-BuildRequires:  qt4-devel
-BuildRequires:  alsa-lib-devel
-BuildRequires:  pulseaudio-libs-devel
-BuildRequires:  jack-audio-connection-kit-devel
-BuildRequires:  libX11-devel
-BuildRequires:  libXfixes-devel
-BuildRequires:  mesa-libGL-devel
-BuildRequires:  mesa-libGLU-devel
+BuildRequires:  pkgconfig(Qt5)
+BuildRequires:  pkgconfig(Qt5X11Extras)
+BuildRequires:  pkgconfig(alsa)
+BuildRequires:  pkgconfig(libpulse)
+BuildRequires:  pkgconfig(jack)
+BuildRequires:  pkgconfig(x11)
+BuildRequires:  pkgconfig(xfixes)
+BuildRequires:  pkgconfig(gl)
+BuildRequires:  pkgconfig(glu)
 
 Requires:       hicolor-icon-theme
 Obsoletes:      %{name}-libs
@@ -34,9 +35,11 @@ It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 
 
 %build
+CPPFLAGS="$CPPFLAGS -fPIC"
 export LDFLAGS="$LDFLAGS `pkg-config --libs-only-L libavformat libavcodec libavutil libswscale`"
 export CPPFLAGS="$CPPFLAGS `pkg-config --cflags-only-I libavformat libavcodec libavutil libswscale`"
-%configure --disable-static \
+%configure --with-qt5 \
+    --disable-static \
 %ifarch %{arm} aarch64
     --disable-x86-asm \
     --disable-glinjectlib \
@@ -82,6 +85,9 @@ fi
 %{_mandir}/man1/%{shortname}-glinject.1.*
 
 %changelog
+* Wed Oct 12 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.6-7
+- Switch to use Qt5
+
 * Wed Sep 21 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.6-6
 - Add obsoletes
 
