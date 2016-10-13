@@ -11,6 +11,9 @@ Patch0:         fix_ldpath.patch
 Patch1:         simplescreenrecorder-0.3.6-fix-build.patch
 
 BuildRequires:  desktop-file-utils
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
 BuildRequires:  ffmpeg-devel
 BuildRequires:  pkgconfig(Qt5)
 BuildRequires:  pkgconfig(Qt5X11Extras)
@@ -21,6 +24,8 @@ BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xfixes)
 BuildRequires:  pkgconfig(gl)
 BuildRequires:  pkgconfig(glu)
+BuildRequires:  pkgconfig(xi)
+BuildRequires:  qt5-linguist
 
 Requires:       hicolor-icon-theme
 Obsoletes:      %{name}-libs
@@ -35,13 +40,15 @@ It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 
 
 %build
-CPPFLAGS="$CPPFLAGS -fPIC"
+./bootstrap
 export LDFLAGS="$LDFLAGS `pkg-config --libs-only-L libavformat libavcodec libavutil libswscale`"
-export CPPFLAGS="$CPPFLAGS `pkg-config --cflags-only-I libavformat libavcodec libavutil libswscale`"
+export CPPFLAGS="$CPPFLAGS -fPIC `pkg-config --cflags-only-I libavformat libavcodec libavutil libswscale`"
 %configure --with-qt5 \
     --disable-static \
-%ifarch %{arm} aarch64
+%ifnarch %{ix86} x86_64
     --disable-x86-asm \
+%endif
+%ifarch %{arm} aarch64
     --disable-glinjectlib \
 %endif
 %nil
