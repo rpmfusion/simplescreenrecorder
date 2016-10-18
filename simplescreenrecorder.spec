@@ -1,8 +1,8 @@
 %define shortname ssr
 Name:           simplescreenrecorder
-Version:        0.3.6
-Release:        7%{?dist}
-Summary:        SimpleScreenRecorder is a screen recorder for Linux
+Version:        0.3.7
+Release:        1%{?dist}
+Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
 URL:            http://www.maartenbaert.be/simplescreenrecorder/
@@ -26,6 +26,7 @@ BuildRequires:  pkgconfig(gl)
 BuildRequires:  pkgconfig(glu)
 BuildRequires:  pkgconfig(xi)
 BuildRequires:  qt5-linguist
+BuildRequires:  libappstream-glib
 
 Requires:       hicolor-icon-theme
 Obsoletes:      %{name}-libs
@@ -66,6 +67,7 @@ mkdir -p %{buildroot}%{_libdir}/%{name}
 
 %check
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
+appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/*.appdata.xml
 
 %post
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
@@ -90,8 +92,12 @@ fi
 %{_libdir}/%{name}
 %{_mandir}/man1/%{name}.1.*
 %{_mandir}/man1/%{shortname}-glinject.1.*
+%{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Tue Oct 18 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.7-1
+- Update to 0.3.7
+
 * Wed Oct 12 2016 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.6-7
 - Switch to use Qt5
 
