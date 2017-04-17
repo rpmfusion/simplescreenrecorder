@@ -1,7 +1,7 @@
 %define shortname ssr
 Name:           simplescreenrecorder
 Version:        0.3.8
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -30,6 +30,9 @@ BuildRequires:  libappstream-glib
 
 Requires:       hicolor-icon-theme
 Obsoletes:      %{name}-libs
+
+#https://github.com/MaartenBaert/ssr/issues/533
+ExcludeArch:    %{power64}
 
 %description
 It is a screen recorder for Linux.
@@ -95,6 +98,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Mon Apr 17 2017 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.8-3
+- Exclude power64 arches from build
+
 * Mon Mar 20 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 0.3.8-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
