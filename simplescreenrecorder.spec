@@ -1,7 +1,7 @@
 %define shortname ssr
 Name:           simplescreenrecorder
-Version:        0.3.8
-Release:        5%{?dist}
+Version:        0.3.9
+Release:        1%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -98,6 +98,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Wed Dec 13 2017 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.9-1
+- Update to 0.3.9
+
 * Thu Aug 31 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 0.3.8-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
