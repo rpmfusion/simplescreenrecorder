@@ -7,13 +7,9 @@ Summary:        Simple Screen Recorder is a screen recorder for Linux
 License:        GPLv3
 URL:            http://www.maartenbaert.be/simplescreenrecorder/
 Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}.tar.gz
-Patch0:         fix_ldpath.patch
-Patch1:         simplescreenrecorder-0.3.6-fix-build.patch
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  autoconf
-BuildRequires:  automake
-BuildRequires:  libtool
+BuildRequires:  cmake
 BuildRequires:  ffmpeg-devel
 BuildRequires:  pkgconfig(Qt5)
 BuildRequires:  pkgconfig(Qt5X11Extras)
@@ -40,27 +36,30 @@ Despite the name, this program is actually quite complex.
 It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 
 %prep
-%autosetup -p1 -n %{shortname}-%{version}
+%autosetup -n %{shortname}-%{version}
 
 
 %build
-./bootstrap
-export LDFLAGS="$LDFLAGS `pkg-config --libs-only-L libavformat libavcodec libavutil libswscale`"
-export CPPFLAGS="$CPPFLAGS -fPIC `pkg-config --cflags-only-I libavformat libavcodec libavutil libswscale`"
-%configure --with-qt5 \
-    --disable-static \
+mkdir build-release
+pushd build-release
+    %cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DWITH_QT5=TRUE \
 %ifnarch %{ix86} x86_64
-    --disable-x86-asm \
+        -DENABLE_X86_ASM=FALSE \
 %endif
 %ifarch %{arm} aarch64
-    --disable-glinjectlib \
+        -DWITH_GLINJECT=FALSE \
 %endif
-%nil
-%make_build
+        ..
+    %make_build
+popd
 
 
 %install
-%make_install
+pushd build-release
+    %make_install
+popd
 
 rm -f %{buildroot}%{_libdir}/*.la
 mkdir -p %{buildroot}%{_libdir}/%{name}
@@ -100,6 +99,7 @@ fi
 %changelog
 * Wed Dec 13 2017 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.9-1
 - Update to 0.3.9
+- Switch to use cmake for build
 
 * Thu Aug 31 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 0.3.8-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
