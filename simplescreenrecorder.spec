@@ -7,6 +7,7 @@ Summary:        Simple Screen Recorder is a screen recorder for Linux
 License:        GPLv3
 URL:            http://www.maartenbaert.be/simplescreenrecorder/
 Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}.tar.gz
+Patch0:         ffmpeg35_buildfix.patch.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  cmake3
@@ -36,7 +37,7 @@ Despite the name, this program is actually quite complex.
 It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 
 %prep
-%autosetup -n %{shortname}-%{version}
+%autosetup -p1 -n %{shortname}-%{version}
 
 
 %build
