@@ -1,7 +1,7 @@
 %define shortname ssr
 Name:           simplescreenrecorder
 Version:        0.3.9
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -97,6 +97,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Thu Jan 18 2018 Leigh Scott <leigh123linux@googlemail.com> - 0.3.9-3
+- Rebuilt for ffmpeg-3.5 git
+
 * Wed Dec 13 2017 Leigh Scott <leigh123linux@googlemail.com> - 0.3.9-2
 - Use build requires cmake3 instead of cmake
 
