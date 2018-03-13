@@ -1,7 +1,7 @@
 %define shortname ssr
 Name:           simplescreenrecorder
-Version:        0.3.9
-Release:        5%{?dist}
+Version:        0.3.10
+Release:        1%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -9,6 +9,7 @@ URL:            http://www.maartenbaert.be/simplescreenrecorder/
 Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}.tar.gz
 Patch0:         ffmpeg35_buildfix.patch.patch
 
+BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
 BuildRequires:  cmake3
 BuildRequires:  ffmpeg-devel
@@ -98,6 +99,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Tue Mar 13 2018 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.10-1
+- Update to 0.3.10
+
 * Thu Mar 08 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 0.3.9-5
 - Rebuilt for new ffmpeg snapshot
 
