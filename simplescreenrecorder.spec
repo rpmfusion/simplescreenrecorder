@@ -1,6 +1,6 @@
 %define shortname ssr
 Name:           simplescreenrecorder
-Version:        0.3.9
+Version:        0.3.10
 Release:        1%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
@@ -97,6 +97,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Tue Mar 13 2018 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.10-1
+- Update to 0.3.10
+
 * Wed Dec 13 2017 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.9-1
 - Update to 0.3.9
 - Switch to use cmake for build
