@@ -1,7 +1,7 @@
 %define shortname ssr
 Name:           simplescreenrecorder
 Version:        0.3.10
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -9,7 +9,7 @@ URL:            http://www.maartenbaert.be/simplescreenrecorder/
 Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}.tar.gz
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  cmake
+BuildRequires:  cmake3
 BuildRequires:  ffmpeg-devel
 BuildRequires:  pkgconfig(Qt5)
 BuildRequires:  pkgconfig(Qt5X11Extras)
@@ -42,7 +42,7 @@ It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 %build
 mkdir build-release
 pushd build-release
-    %cmake \
+    %cmake3 \
         -DCMAKE_BUILD_TYPE=Release \
         -DWITH_QT5=TRUE \
 %ifnarch %{ix86} x86_64
@@ -99,6 +99,9 @@ fi
 %changelog
 * Tue Mar 13 2018 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.10-1
 - Update to 0.3.10
+
+* Wed Dec 13 2017 Leigh Scott <leigh123linux@googlemail.com> - 0.3.9-2
+- Use build requires cmake3 instead of cmake
 
 * Wed Dec 13 2017 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.9-1
 - Update to 0.3.9
