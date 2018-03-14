@@ -1,7 +1,7 @@
 %define shortname ssr
 Name:           simplescreenrecorder
 Version:        0.3.10
-Release:        2%{?dist}
+Release:        1%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -11,8 +11,7 @@ Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}.tar.gz
 BuildRequires:  desktop-file-utils
 BuildRequires:  cmake3
 BuildRequires:  ffmpeg-devel
-BuildRequires:  pkgconfig(Qt5)
-BuildRequires:  pkgconfig(Qt5X11Extras)
+BuildRequires:  pkgconfig(QtGui) >= 4.8.0
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(jack)
@@ -21,7 +20,6 @@ BuildRequires:  pkgconfig(xfixes)
 BuildRequires:  pkgconfig(gl)
 BuildRequires:  pkgconfig(glu)
 BuildRequires:  pkgconfig(xi)
-BuildRequires:  qt5-linguist
 BuildRequires:  libappstream-glib
 
 Requires:       hicolor-icon-theme
@@ -44,7 +42,7 @@ mkdir build-release
 pushd build-release
     %cmake3 \
         -DCMAKE_BUILD_TYPE=Release \
-        -DWITH_QT5=TRUE \
+        -DWITH_QT5=FALSE \
 %ifnarch %{ix86} x86_64
         -DENABLE_X86_ASM=FALSE \
 %endif
