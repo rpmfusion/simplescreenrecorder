@@ -13,7 +13,7 @@ BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
 BuildRequires:  cmake3
 BuildRequires:  ffmpeg-devel
-BuildRequires:  pkgconfig(Qt5)
+BuildRequires:  pkgconfig(Qt5) >= 5.7.0
 BuildRequires:  pkgconfig(Qt5X11Extras)
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(libpulse)
