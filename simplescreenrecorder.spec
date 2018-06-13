@@ -1,6 +1,6 @@
 %define shortname ssr
 Name:           simplescreenrecorder
-Version:        0.3.10
+Version:        0.3.11
 Release:        1%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
@@ -8,6 +8,7 @@ License:        GPLv3
 URL:            http://www.maartenbaert.be/simplescreenrecorder/
 Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}.tar.gz
 
+BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
 BuildRequires:  cmake3
 BuildRequires:  ffmpeg-devel
@@ -95,8 +96,20 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Wed Jun 13 2018 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.11-1
+- Update to 0.3.11
+
 * Tue Mar 13 2018 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.10-1
 - Update to 0.3.10
+
+* Thu Mar 08 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 0.3.9-5
+- Rebuilt for new ffmpeg snapshot
+
+* Thu Mar 01 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 0.3.9-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
+* Thu Jan 18 2018 Leigh Scott <leigh123linux@googlemail.com> - 0.3.9-3
+- Rebuilt for ffmpeg-3.5 git
 
 * Wed Dec 13 2017 Leigh Scott <leigh123linux@googlemail.com> - 0.3.9-2
 - Use build requires cmake3 instead of cmake
