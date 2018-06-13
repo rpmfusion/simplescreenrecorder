@@ -1,6 +1,6 @@
 %define shortname ssr
 Name:           simplescreenrecorder
-Version:        0.3.10
+Version:        0.3.11
 Release:        1%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
@@ -12,7 +12,7 @@ BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
 BuildRequires:  cmake3
 BuildRequires:  ffmpeg-devel
-BuildRequires:  pkgconfig(Qt5)
+BuildRequires:  pkgconfig(Qt5) >= 5.7.0
 BuildRequires:  pkgconfig(Qt5X11Extras)
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(libpulse)
@@ -98,6 +98,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Wed Jun 13 2018 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.11-1
+- Update to 0.3.11
+
 * Tue Mar 13 2018 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.10-1
 - Update to 0.3.10
 
