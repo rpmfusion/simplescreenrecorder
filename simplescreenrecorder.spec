@@ -1,7 +1,7 @@
 %define shortname ssr
 Name:           simplescreenrecorder
 Version:        0.3.11
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -69,8 +69,8 @@ mkdir -p %{buildroot}%{_libdir}/%{name}
 %endif
 
 %check
-desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
-appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/*.appdata.xml
+desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
+appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/*.appdata.xml
 
 %post
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
@@ -98,6 +98,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Wed Nov 14 2018 Antonio Trande <sagitter@fedoraproject.org> - 0.3.11-4
+- Rebuild for ffmpeg-3.4.5 on el7
+
 * Sun Aug 19 2018 Leigh Scott <leigh123linux@googlemail.com> - 0.3.11-3
 - Rebuilt for Fedora 29 Mass Rebuild binutils issue
 
