@@ -1,12 +1,13 @@
 %define shortname ssr
 Name:           simplescreenrecorder
 Version:        0.3.11
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
 URL:            http://www.maartenbaert.be/simplescreenrecorder/
 Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}.tar.gz
+Patch0:         0001-Fix-libssr-glinject.so-preload-path.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
@@ -35,7 +36,7 @@ Despite the name, this program is actually quite complex.
 It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 
 %prep
-%autosetup -n %{shortname}-%{version}
+%autosetup -p1 -n %{shortname}-%{version}
 
 
 %build
@@ -96,6 +97,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Mon Feb 04 2019 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.11-5
+- Added preload patch
+
 * Wed Nov 14 2018 Antonio Trande <sagitter@fedoraproject.org> - 0.3.11-4
 - Rebuild for ffmpeg-3.4.5 on el7
 
