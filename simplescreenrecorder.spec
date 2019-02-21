@@ -1,7 +1,7 @@
 %define shortname ssr
 Name:           simplescreenrecorder
 Version:        0.3.11
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -39,6 +39,8 @@ It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 
 %prep
 %autosetup -p1 -n %{shortname}-%{version}
+# https://github.com/MaartenBaert/ssr/issues/694
+sed -i 's|lrelease|lrelease-qt5|' src/translations/CMakeLists.txt
 
 
 %build
@@ -99,6 +101,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Thu Feb 21 2019 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.11-6
+- Enable translations
+
 * Mon Feb 04 2019 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.11-5
 - Added preload patch
 
