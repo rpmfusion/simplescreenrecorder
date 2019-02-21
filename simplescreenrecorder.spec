@@ -38,7 +38,7 @@ It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 %prep
 %autosetup -p1 -n %{shortname}-%{version}
 # https://github.com/MaartenBaert/ssr/issues/694
-sed -i 's|lrelease|lrelease-qt5|' src/translations/CMakeLists.txt
+sed -i 's|lrelease|lrelease-qt4|' src/translations/CMakeLists.txt
 
 
 %build
