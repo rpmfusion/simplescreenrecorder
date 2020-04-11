@@ -1,12 +1,12 @@
 %define shortname ssr
 Name:           simplescreenrecorder
-Version:        0.3.11
-Release:        10%{?dist}
+Version:        0.4.0
+Release:        1%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
 URL:            http://www.maartenbaert.be/simplescreenrecorder/
-Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}.tar.gz
+Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}/%{name}-%{version}.tar.gz
 Patch0:         0001-Fix-libssr-glinject.so-preload-path.patch
 
 BuildRequires:  gcc-c++
@@ -61,12 +61,10 @@ popd
 
 
 %install
-pushd build-release
-    %make_install
-popd
+%make_install -C build-release
 
 rm -f %{buildroot}%{_libdir}/*.la
-mkdir -p %{buildroot}%{_libdir}/%{name}
+mkdir -p %{buildroot}%{_libdir}/%{name}/
 %ifnarch %{arm} aarch64
     mv %{buildroot}%{_libdir}/lib%{shortname}-glinject.so %{buildroot}%{_libdir}/%{name}/lib%{shortname}-glinject.so
 %endif
@@ -75,32 +73,24 @@ mkdir -p %{buildroot}%{_libdir}/%{name}
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/*.appdata.xml
 
-%post
-/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-
-%postun
-if [ $1 -eq 0 ] ; then
-    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-fi
-
-%posttrans
-/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-
 %files
 %doc README.md AUTHORS.md CHANGELOG.md notes.txt todo.txt
 %license COPYING
 %{_bindir}/%{name}
-%{_datadir}/%{name}
+%{_datadir}/%{name}/
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}*
 %{_bindir}/%{shortname}-glinject
-%{_libdir}/%{name}
+%{_libdir}/%{name}/
 %{_mandir}/man1/%{name}.1.*
 %{_mandir}/man1/%{shortname}-glinject.1.*
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sat Apr 11 2020 Leigh Scott <leigh123linux@gmail.com> - 0.4.0-1
+- Update to 4.0.0
+- Remove scriptlets
+
 * Sat Feb 22 2020 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 0.3.11-10
 - Rebuild for ffmpeg-4.3 git
 
