@@ -20,6 +20,7 @@ BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(jack)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xfixes)
+BuildRequires:  pkgconfig(xinerama)
 BuildRequires:  pkgconfig(gl)
 BuildRequires:  pkgconfig(glu)
 BuildRequires:  pkgconfig(xi)
@@ -90,6 +91,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/*.appdata.
 * Sat Apr 11 2020 Leigh Scott <leigh123linux@gmail.com> - 0.4.0-1
 - Update to 4.0.0
 - Remove scriptlets
+- Add BuildRequires libXinerama-devel
 
 * Sat Feb 22 2020 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 0.3.11-10
 - Rebuild for ffmpeg-4.3 git
