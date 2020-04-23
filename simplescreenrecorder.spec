@@ -1,12 +1,12 @@
-%define shortname ssr
+%global shortname ssr
 Name:           simplescreenrecorder
-Version:        0.3.11
-Release:        6%{?dist}
+Version:        0.4.0
+Release:        2%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
 URL:            http://www.maartenbaert.be/simplescreenrecorder/
-Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}.tar.gz
+Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}/%{name}-%{version}.tar.gz
 Patch0:         0001-Fix-libssr-glinject.so-preload-path.patch
 
 BuildRequires:  gcc-c++
@@ -19,6 +19,7 @@ BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(jack)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xfixes)
+BuildRequires:  pkgconfig(xinerama)
 BuildRequires:  pkgconfig(gl)
 BuildRequires:  pkgconfig(glu)
 BuildRequires:  pkgconfig(xi)
@@ -37,8 +38,6 @@ It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 
 %prep
 %autosetup -p1 -n %{shortname}-%{version}
-# https://github.com/MaartenBaert/ssr/issues/694
-sed -i 's|lrelease|lrelease-qt4|' src/translations/CMakeLists.txt
 
 
 %build
@@ -59,12 +58,10 @@ popd
 
 
 %install
-pushd build-release
-    %make_install
-popd
+%make_install -C build-release
 
 rm -f %{buildroot}%{_libdir}/*.la
-mkdir -p %{buildroot}%{_libdir}/%{name}
+mkdir -p %{buildroot}%{_libdir}/%{name}/
 %ifnarch %{arm} aarch64
     mv %{buildroot}%{_libdir}/lib%{shortname}-glinject.so %{buildroot}%{_libdir}/%{name}/lib%{shortname}-glinject.so
 %endif
@@ -73,32 +70,40 @@ mkdir -p %{buildroot}%{_libdir}/%{name}
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/*.appdata.xml
 
-%post
-/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-
-%postun
-if [ $1 -eq 0 ] ; then
-    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-fi
-
-%posttrans
-/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-
 %files
 %doc README.md AUTHORS.md CHANGELOG.md notes.txt todo.txt
 %license COPYING
 %{_bindir}/%{name}
-%{_datadir}/%{name}
+%{_datadir}/%{name}/
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}*
 %{_bindir}/%{shortname}-glinject
-%{_libdir}/%{name}
+%{_libdir}/%{name}/
 %{_mandir}/man1/%{name}.1.*
 %{_mandir}/man1/%{shortname}-glinject.1.*
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Thu Apr 23 2020 Vasiliy N. Glazov <vascom2@gmail.com> - 0.4.0-2
+- Restored translations
+
+* Sat Apr 11 2020 Leigh Scott <leigh123linux@gmail.com> - 0.4.0-1
+- Update to 4.0.0
+- Remove scriptlets
+- Add BuildRequires libXinerama-devel
+
+* Sat Feb 22 2020 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 0.3.11-10
+- Rebuild for ffmpeg-4.3 git
+
+* Wed Feb 05 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 0.3.11-9
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
+* Wed Aug 07 2019 Leigh Scott <leigh123linux@gmail.com> - 0.3.11-8
+- Rebuild for new ffmpeg version
+
+* Mon Mar 04 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 0.3.11-7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Thu Feb 21 2019 Vasiliy N. Glazov <vascom2@gmail.com> - 0.3.11-6
 - Enable translations
 
