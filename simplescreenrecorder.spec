@@ -1,7 +1,7 @@
 %global shortname ssr
 Name:           simplescreenrecorder
-Version:        0.4.0
-Release:        2%{?dist}
+Version:        0.4.1
+Release:        1%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -70,7 +70,7 @@ mkdir -p %{buildroot}%{_libdir}/%{name}/
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/*.appdata.xml
+appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.metainfo.xml
 
 %files
 %doc README.md AUTHORS.md CHANGELOG.md notes.txt todo.txt
@@ -83,9 +83,12 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/*.appdata.
 %{_libdir}/%{name}/
 %{_mandir}/man1/%{name}.1.*
 %{_mandir}/man1/%{shortname}-glinject.1.*
-%{_datadir}/appdata/%{name}.appdata.xml
+%{_datadir}/metainfo/%{name}.metainfo.xml
 
 %changelog
+* Fri May 15 2020 Vasiliy N. Glazov <vascom2@gmail.com> - 0.4.1-1
+- Update to 0.4.1
+
 * Thu Apr 23 2020 Vasiliy N. Glazov <vascom2@gmail.com> - 0.4.0-2
 - Restored translations
 
