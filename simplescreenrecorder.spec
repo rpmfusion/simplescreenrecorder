@@ -1,11 +1,11 @@
 %global shortname ssr
 Name:           simplescreenrecorder
-Version:        0.4.1
+Version:        0.4.2
 Release:        1%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
-URL:            http://www.maartenbaert.be/simplescreenrecorder/
+URL:            https://www.maartenbaert.be/simplescreenrecorder/
 Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}/%{name}-%{version}.tar.gz
 Patch0:         0001-Fix-libssr-glinject.so-preload-path.patch
 
@@ -86,6 +86,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.metainf
 %{_datadir}/metainfo/%{name}.metainfo.xml
 
 %changelog
+* Tue May 19 2020 Vasiliy N. Glazov <vascom2@gmail.com> - 0.4.2-1
+- Update to 0.4.2
+
 * Fri May 15 2020 Vasiliy N. Glazov <vascom2@gmail.com> - 0.4.1-1
 - Update to 0.4.1
 
