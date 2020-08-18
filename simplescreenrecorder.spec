@@ -1,4 +1,7 @@
 %global shortname ssr
+
+%undefine __cmake_in_source_build
+
 Name:           simplescreenrecorder
 Version:        0.4.2
 Release:        2%{?dist}
@@ -43,9 +46,7 @@ It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 
 
 %build
-mkdir build-release
-pushd build-release
-    %cmake3 \
+%cmake3 \
         -DCMAKE_BUILD_TYPE=Release \
         -DWITH_QT5=TRUE \
 %ifnarch %{ix86} x86_64
@@ -54,13 +55,11 @@ pushd build-release
 %ifarch %{arm} aarch64
         -DWITH_GLINJECT=FALSE \
 %endif
-        ..
-    %make_build
-popd
+%cmake3_build
 
 
 %install
-%make_install -C build-release
+%cmake3_install
 
 rm -f %{buildroot}%{_libdir}/*.la
 mkdir -p %{buildroot}%{_libdir}/%{name}/
