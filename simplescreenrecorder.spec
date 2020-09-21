@@ -4,7 +4,7 @@
 
 Name:           simplescreenrecorder
 Version:        0.4.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -31,10 +31,8 @@ BuildRequires:  qt5-linguist
 BuildRequires:  libappstream-glib
 
 Requires:       hicolor-icon-theme
-Obsoletes:      %{name}-libs
+Obsoletes:      %{name}-libs < %{version}-3
 
-#https://github.com/MaartenBaert/ssr/issues/533
-ExcludeArch:    %{power64}
 
 %description
 It is a screen recorder for Linux.
@@ -85,6 +83,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.metainf
 %{_datadir}/metainfo/%{name}.metainfo.xml
 
 %changelog
+* Mon Sep 21 2020 Nicolas Chauvet <kwizart@gmail.com> - 0.4.2-3
+- Drop ppc64 exclude
+- Add versionned obsoletes
+
 * Tue Aug 18 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 0.4.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
