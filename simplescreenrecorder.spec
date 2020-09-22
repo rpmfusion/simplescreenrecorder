@@ -50,7 +50,7 @@ It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 %ifnarch %{ix86} x86_64
         -DENABLE_X86_ASM=FALSE \
 %endif
-%ifarch %{arm} aarch64
+%ifarch %{arm} aarch64 %{power64}
         -DWITH_GLINJECT=FALSE \
 %endif
 %cmake3_build
@@ -61,7 +61,7 @@ It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 
 rm -f %{buildroot}%{_libdir}/*.la
 mkdir -p %{buildroot}%{_libdir}/%{name}/
-%ifnarch %{arm} aarch64
+%ifnarch %{arm} aarch64 %{power64}
     mv %{buildroot}%{_libdir}/lib%{shortname}-glinject.so %{buildroot}%{_libdir}/%{name}/lib%{shortname}-glinject.so
 %endif
 
