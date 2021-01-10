@@ -3,8 +3,8 @@
 %undefine __cmake_in_source_build
 
 Name:           simplescreenrecorder
-Version:        0.4.2
-Release:        4%{?dist}
+Version:        0.4.3
+Release:        1%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -29,6 +29,7 @@ BuildRequires:  pkgconfig(glu)
 BuildRequires:  pkgconfig(xi)
 BuildRequires:  qt5-linguist
 BuildRequires:  libappstream-glib
+BuildRequires:  pkgconfig(libv4l2)
 
 Requires:       hicolor-icon-theme
 Obsoletes:      %{name}-libs < %{version}-3
@@ -83,6 +84,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.metainf
 %{_datadir}/metainfo/%{name}.metainfo.xml
 
 %changelog
+* Sun Jan 10 2021 Vasiliy N. Glazov <vascom2@gmail.com> - 0.4.3-1
+- Update to 0.4.3
+
 * Fri Jan  1 2021 Leigh Scott <leigh123linux@gmail.com> - 0.4.2-4
 - Rebuilt for new ffmpeg snapshot
 
