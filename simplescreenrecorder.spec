@@ -4,7 +4,7 @@
 
 Name:           simplescreenrecorder
 Version:        0.4.3
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -84,6 +84,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.metainf
 %{_datadir}/metainfo/%{name}.metainfo.xml
 
 %changelog
+* Fri Nov 12 2021 Leigh Scott <leigh123linux@gmail.com> - 0.4.3-4
+- Rebuilt for new ffmpeg snapshot
+
 * Tue Aug 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 0.4.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
