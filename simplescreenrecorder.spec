@@ -11,6 +11,7 @@ License:        GPLv3
 URL:            https://www.maartenbaert.be/simplescreenrecorder/
 Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}/%{name}-%{version}.tar.gz
 Patch0:         0001-Fix-libssr-glinject.so-preload-path.patch
+Patch1:         https://github.com/MaartenBaert/ssr/pull/934.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
@@ -86,6 +87,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.metainf
 %changelog
 * Wed Feb 09 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.4.3-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
+- Add ffmpeg-5 patch
 
 * Fri Nov 12 2021 Leigh Scott <leigh123linux@gmail.com> - 0.4.3-4
 - Rebuilt for new ffmpeg snapshot
