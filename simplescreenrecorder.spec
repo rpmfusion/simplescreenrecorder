@@ -11,7 +11,7 @@ License:        GPLv3
 URL:            https://www.maartenbaert.be/simplescreenrecorder/
 Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}/%{name}-%{version}.tar.gz
 Patch0:         0001-Fix-libssr-glinject.so-preload-path.patch
-Patch1:         https://github.com/MaartenBaert/ssr/pull/934.patch
+# Patch1:         https://github.com/MaartenBaert/ssr/pull/934.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
