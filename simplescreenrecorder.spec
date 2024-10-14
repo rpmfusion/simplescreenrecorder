@@ -5,8 +5,8 @@
 #global tag %{version}
 
 Name:           simplescreenrecorder
-Version:        0.4.5
-Release:        0.1%{!?tag:^%{date}git%{shortcommit0}}
+Version:        0.4.5%{!?tag:^%{date}git%{shortcommit0}}
+Release:        1%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -97,7 +97,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_metainfodir}/%{name}.metainfo.xml
 
 %changelog
-* Mon Oct 14 2024 Leigh Scott <leigh123linux@gmail.com> - 0.4.5-0.1^20241006gitd531067
+* Mon Oct 14 2024 Leigh Scott <leigh123linux@gmail.com> - 0.4.5^20241006gitd531067-1
 - Update to git snapshot to fix ffmpeg-7 build issues (rfbz#7082)
 
 * Fri Aug 02 2024 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.4.4-6
