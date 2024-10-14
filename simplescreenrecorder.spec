@@ -1,26 +1,33 @@
 %global shortname ssr
-
-%undefine __cmake_in_source_build
+%global commit0 d5310677bc41f6be95f7885d9d5f7ba6dcf4ec89
+%global date 20241006
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+#global tag %{version}
 
 Name:           simplescreenrecorder
-Version:        0.4.4
-Release:        6%{?dist}
+Version:        0.4.5
+Release:        0.1%{!?tag:^%{date}git%{shortcommit0}}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
 URL:            https://www.maartenbaert.be/simplescreenrecorder/
+%if 0%{?tag:1}
 Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}/%{name}-%{version}.tar.gz
+%else
+Source0:        https://github.com/MaartenBaert/ssr/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
+%endif
 Patch0:         0001-Fix-libssr-glinject.so-preload-path.patch
-Patch1:         https://github.com/MaartenBaert/ssr/pull/934.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
-BuildRequires:  cmake3
+BuildRequires:  cmake
 BuildRequires:  ffmpeg-devel
+BuildRequires:  ninja-build
 BuildRequires:  pkgconfig(Qt5) >= 5.7.0
 BuildRequires:  pkgconfig(Qt5X11Extras)
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(libpulse)
+BuildRequires:  pkgconfig(libpipewire-0.3)
 BuildRequires:  pkgconfig(jack)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xfixes)
@@ -42,24 +49,29 @@ Despite the name, this program is actually quite complex.
 It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 
 %prep
+%if 0%{?tag:1}
 %autosetup -p1 -n %{shortname}-%{version}
+%else
+%autosetup -p1 -n %{shortname}-%{commit0}
+%endif
 
 
 %build
-%cmake3 \
+%cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DWITH_QT5=TRUE \
+        -GNinja \
 %ifnarch %{ix86} x86_64
         -DENABLE_X86_ASM=FALSE \
 %endif
 %ifarch %{arm} aarch64 %{power64}
         -DWITH_GLINJECT=FALSE \
 %endif
-%cmake3_build
+%cmake_build
 
 
 %install
-%cmake3_install
+%cmake_install
 
 rm -f %{buildroot}%{_libdir}/*.la
 mkdir -p %{buildroot}%{_libdir}/%{name}/
@@ -69,7 +81,7 @@ mkdir -p %{buildroot}%{_libdir}/%{name}/
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.metainfo.xml
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 
 %files
 %doc README.md AUTHORS.md CHANGELOG.md notes.txt todo.txt
@@ -82,9 +94,12 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.metainf
 %{_libdir}/%{name}/
 %{_mandir}/man1/%{name}.1.*
 %{_mandir}/man1/%{shortname}-glinject.1.*
-%{_datadir}/metainfo/%{name}.metainfo.xml
+%{_metainfodir}/%{name}.metainfo.xml
 
 %changelog
+* Mon Oct 14 2024 Leigh Scott <leigh123linux@gmail.com> - 0.4.5-0.1^20241006gitd531067
+- Update to git snapshot to fix ffmpeg-7 build issues (rfbz#7082)
+
 * Fri Aug 02 2024 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.4.4-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_41_Mass_Rebuild
 
