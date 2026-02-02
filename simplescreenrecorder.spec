@@ -1,12 +1,12 @@
 %global shortname ssr
-%global commit0 d5310677bc41f6be95f7885d9d5f7ba6dcf4ec89
-%global date 20241006
+%global commit0 d790385b49de937976165d6feb39414c75ad6a3d
+%global date 20251228
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 #global tag %{version}
 
 Name:           simplescreenrecorder
 Version:        0.4.5%{!?tag:^%{date}git%{shortcommit0}}
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -23,8 +23,8 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  cmake
 BuildRequires:  ffmpeg-devel
 BuildRequires:  ninja-build
-BuildRequires:  pkgconfig(Qt5) >= 5.7.0
-BuildRequires:  pkgconfig(Qt5X11Extras)
+BuildRequires:  pkgconfig(Qt6) >= 5.7.0
+#BuildRequires:  pkgconfig(Qt6X11Extras)
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(libpipewire-0.3)
@@ -35,7 +35,7 @@ BuildRequires:  pkgconfig(xinerama)
 BuildRequires:  pkgconfig(gl)
 BuildRequires:  pkgconfig(glu)
 BuildRequires:  pkgconfig(xi)
-BuildRequires:  qt5-linguist
+BuildRequires:  cmake(Qt6LinguistTools)
 BuildRequires:  libappstream-glib
 BuildRequires:  pkgconfig(libv4l2)
 
@@ -59,7 +59,7 @@ It's 'simple' in the sense that it's easier to use than ffmpeg/avconv or VLC
 %build
 %cmake \
         -DCMAKE_BUILD_TYPE=Release \
-        -DWITH_QT5=TRUE \
+        -DWITH_QT6=TRUE \
         -GNinja \
 %ifnarch %{ix86} x86_64
         -DENABLE_X86_ASM=FALSE \
@@ -78,9 +78,12 @@ mkdir -p %{buildroot}%{_libdir}/%{name}/
 %ifnarch %{arm} aarch64 %{power64}
     mv %{buildroot}%{_libdir}/lib%{shortname}-glinject.so %{buildroot}%{_libdir}/%{name}/lib%{shortname}-glinject.so
 %endif
+#workaround for bug https://bugzilla.redhat.com/show_bug.cgi?id=1584944
+sed -i %{buildroot}/%{_metainfodir}/*.metainfo.xml -e 's/type="stock"//'
 
 %check
-desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
+
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 
 %files
@@ -88,15 +91,18 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %license COPYING
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}*
 %{_bindir}/%{shortname}-glinject
 %{_libdir}/%{name}/
 %{_mandir}/man1/%{name}.1.*
 %{_mandir}/man1/%{shortname}-glinject.1.*
-%{_metainfodir}/%{name}.metainfo.xml
+%{_metainfodir}/*.metainfo.xml
 
 %changelog
+* Mon Feb 02 2026 Sérgio Basto <sergio@serjux.com> - 0.4.5^20251228gitd790385-6
+- (#7387) Update snapshot and switch to Qt6
+
 * Mon Feb 02 2026 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.4.5^20241006gitd531067-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_44_Mass_Rebuild
 
