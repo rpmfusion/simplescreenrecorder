@@ -6,7 +6,7 @@
 
 Name:           simplescreenrecorder
 Version:        0.4.5%{!?tag:^%{date}git%{shortcommit0}}
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Simple Screen Recorder is a screen recorder for Linux
 
 License:        GPLv3
@@ -100,6 +100,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_metainfodir}/*.metainfo.xml
 
 %changelog
+* Sun Aug 02 2026 RPM Fusion Release Engineering <leigh123linux@rpmfusion.org> - 0.4.5^20251228gitd790385-7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_45_Mass_Rebuild
+
 * Mon Feb 02 2026 Sérgio Basto <sergio@serjux.com> - 0.4.5^20251228gitd790385-6
 - (#7387) Update snapshot and switch to Qt6
 
