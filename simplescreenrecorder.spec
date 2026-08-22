@@ -17,6 +17,8 @@ Source0:        https://github.com/MaartenBaert/ssr/archive/%{version}/%{name}-%
 Source0:        https://github.com/MaartenBaert/ssr/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
 %endif
 Patch0:         0001-Fix-libssr-glinject.so-preload-path.patch
+# https://github.com/MaartenBaert/ssr/commit/e73e07664121ac30836872bca76194c6570e04c8
+Patch1:         ffmpeg9.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
